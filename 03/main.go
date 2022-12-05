@@ -70,25 +70,6 @@ func charValue(c rune) int {
 	return 0
 }
 
-func DetectDupe(input string) rune {
-	l := len(input) / 2
-
-	// Convert string to rune slice.
-	r1 := []rune(input[:l])
-	r2 := []rune(input[l:])
-	// Iterate over the first string.
-	for _, c1 := range r1 {
-		// Iterate over the second string.
-		for _, c2 := range r2 {
-			// If the characters match, return the character.
-			if c1 == c2 {
-				return c1
-			}
-		}
-	}
-	return -1
-}
-
 func GroupArray(input []string, size int) [][]string {
 	var result [][]string
 	for i := 0; i < len(input); i += size {
