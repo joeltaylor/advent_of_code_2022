@@ -23,16 +23,14 @@ func DetectMarker(input string, length int) int {
 }
 
 func checkUnique(input string) bool {
-	seen := map[rune]int{}
+	seen := map[rune]bool{}
 	for _, v := range input {
-		seen[v]++
-	}
-
-	for _, v := range seen {
-		if v > 1 {
+		if seen[v] {
 			return false
 		}
+		seen[v] = true
 	}
+
 	return true
 
 }
