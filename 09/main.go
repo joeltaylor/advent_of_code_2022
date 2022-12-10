@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"reflect"
 	"strconv"
 	"strings"
 )
@@ -27,7 +26,7 @@ func main() {
 	defer f.Close()
 
 	scanner := bufio.NewScanner(f)
-	fmt.Println(Simulate(scanner, 1))
+	// fmt.Println(Simulate(scanner, 1))
 	fmt.Println(Simulate(scanner, 9))
 }
 
@@ -74,30 +73,14 @@ func (c *Knot) RelayMove() {
 }
 
 func (c Knot) HasContact() bool {
-	tailCoordinates := c.Coordinates
-	switch h := c.Head; {
-	case reflect.DeepEqual(h.left(), tailCoordinates):
-		return true
-	case reflect.DeepEqual(h.right(), tailCoordinates):
-		return true
-	case reflect.DeepEqual(h.top(), tailCoordinates):
-		return true
-	case reflect.DeepEqual(h.bottom(), tailCoordinates):
-		return true
-	case reflect.DeepEqual(h.top_left(), tailCoordinates):
-		return true
-	case reflect.DeepEqual(h.bottom_left(), tailCoordinates):
-		return true
-	case reflect.DeepEqual(h.top_right(), tailCoordinates):
-		return true
-	case reflect.DeepEqual(h.bottom_right(), tailCoordinates):
-		return true
-	case reflect.DeepEqual(h.Coordinates, tailCoordinates):
-		return true
-	default:
+	head := c.Head
+	if head.Y-c.Y > 1 || head.Y-c.Y < -1 {
 		return false
-
 	}
+	if head.X-c.X > 1 || head.X-c.X < -1 {
+		return false
+	}
+	return true
 }
 
 func (c *Knot) MoveToContact() {
@@ -131,29 +114,4 @@ func (c *Knot) Move(direction string) {
 }
 func (c Knot) last() bool {
 	return c.Tail == nil
-}
-
-func (c Knot) left() Coordinates {
-	return Coordinates{X: c.X - 1, Y: c.Y}
-}
-func (c Knot) right() Coordinates {
-	return Coordinates{X: c.X + 1, Y: c.Y}
-}
-func (c Knot) top() Coordinates {
-	return Coordinates{X: c.X, Y: c.Y + 1}
-}
-func (c Knot) bottom() Coordinates {
-	return Coordinates{X: c.X, Y: c.Y - 1}
-}
-func (c Knot) top_left() Coordinates {
-	return Coordinates{X: c.X - 1, Y: c.Y + 1}
-}
-func (c Knot) top_right() Coordinates {
-	return Coordinates{X: c.X + 1, Y: c.Y + 1}
-}
-func (c Knot) bottom_left() Coordinates {
-	return Coordinates{X: c.X - 1, Y: c.Y - 1}
-}
-func (c Knot) bottom_right() Coordinates {
-	return Coordinates{X: c.X + 1, Y: c.Y - 1}
 }
